@@ -245,3 +245,44 @@ plt.ylabel("Skewness")
 plt.title("Decision Boundary of Single Layer Perceptron")
 
 plt.show()
+
+# Train Scikit-learn Perceptron
+from sklearn.linear_model import Perceptron as SKPerceptron
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+import pandas as pd
+
+sk_model = SKPerceptron(
+    eta0=0.01,
+    max_iter=20,
+    tol=None,
+    random_state=42
+)
+
+sk_model.fit(X_train, y_train)
+
+y_pred_sk = sk_model.predict(X_test)
+
+print("Accuracy :", accuracy_score(y_test, y_pred_sk))
+print("Precision:", precision_score(y_test, y_pred_sk))
+print("Recall   :", recall_score(y_test, y_pred_sk))
+print("F1 Score :", f1_score(y_test, y_pred_sk))
+
+#Different learning rates accuracy
+from sklearn.linear_model import Perceptron
+learning_rates = [0.001, 0.01, 0.1]
+
+for lr in learning_rates:
+    model = Perceptron(
+        eta0=lr,
+        max_iter=20,
+        tol=None,
+        random_state=42
+    )
+
+    model.fit(X_train, y_train)
+
+    y_pred = model.predict(X_test)
+
+    print(f"Learning Rate = {lr}")
+    print("Accuracy:", accuracy_score(y_test, y_pred))
+    print("-"*40)
